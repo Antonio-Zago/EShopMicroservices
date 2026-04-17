@@ -1,6 +1,7 @@
 ﻿
 using BuildingBlocks.CQRS;
 using Catalog.Api.Models;
+using FluentValidation;
 using Marten;
 
 namespace Catalog.Api.Products.CreateProduct
@@ -11,6 +12,15 @@ namespace Catalog.Api.Products.CreateProduct
     public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
     : ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
+
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductCommandValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price canot fewer than 0");
+        }
+    }
 
     // Como a classe handler está herdando de IRequestHandler o MediatR entende que essa classe é um dos possíveis classes 
     //com a lógica que os controllers podem chamar
