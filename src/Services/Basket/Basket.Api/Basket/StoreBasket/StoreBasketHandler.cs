@@ -1,6 +1,8 @@
-﻿using Basket.Api.Models;
+﻿using Basket.Api.Data;
+using Basket.Api.Models;
 using BuildingBlocks.CQRS;
 using FluentValidation;
+using Mapster;
 
 namespace Basket.Api.Basket.StoreBasket
 {
@@ -17,11 +19,16 @@ namespace Basket.Api.Basket.StoreBasket
         }
     }
 
-    public class StoreBasketHandler : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketHandler(IBasketRepository repository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+
+            await repository.StoreBasket(command.shoppingCart, cancellationToken);
+
+            var result = command.shoppingCart.Adapt<StoreBasketResult>();
+
+            return result;
         }
     }
 }

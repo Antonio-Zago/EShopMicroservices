@@ -22,6 +22,12 @@ services:
      volumes:
        - postgres_basket:/var/lib/postgresql/data/
   
+  distributedcache:
+     container_name: distributedcache
+     restart: always
+     ports:
+        - "6369:6367"
+  
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
