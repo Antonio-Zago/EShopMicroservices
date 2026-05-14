@@ -20,16 +20,19 @@ namespace Basket.Api.Basket.StoreBasket
         }
     }
 
-    public class StoreBasketHandler(IBasketRepository repository, DiscountProtoService.DiscountProtoServiceClient discountProto) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    public class StoreBasketHandler(IBasketRepository repository, DiscountProtoService.DiscountProtoServiceClient discountProto, ILogger<StoreBasketHandler> logger) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
-
+            logger.LogInformation("Gravando carrinho de compras");
             foreach (var item in command.shoppingCart.Items)
             {
                 var coupon = await discountProto.GetDiscountAsync(new GetDiscountRequest() { ProductName = item.ProductName}, cancellationToken: cancellationToken);
+                logger.LogInformation($"Valor do coupon: {coupon.Amount}" );
+
                 item.Price -= coupon.Amount;
             }
+            logger.LogInformation("Terminou de gravar carrinho de compras");
 
             await repository.StoreBasket(command.shoppingCart, cancellationToken);
 
