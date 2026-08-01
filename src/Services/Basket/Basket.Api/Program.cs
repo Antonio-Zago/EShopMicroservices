@@ -7,6 +7,7 @@ using Discount.Grpc;
 using FluentValidation;
 using Marten;
 using Microsoft.AspNetCore.Identity;
+using BuildingBlocks.Messaging.MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,8 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 {
     options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
 });
+
+builder.Services.AddMassTransitWithRabbitMq(builder.Configuration);
 
 var app = builder.Build();
 
