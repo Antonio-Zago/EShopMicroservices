@@ -13,20 +13,20 @@ namespace Basket.Api.Basket.CheckoutBasket
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
-            {
-                var commad = request.Adapt<CheckoutBasketCommand>();
+            //app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
+            //{
+            //    var commad = request.Adapt<CheckoutBasketCommand>();
 
-                var result = await sender.Send(commad);
+            //    var result = await sender.Send(commad);
 
-                var response = result.Adapt<CheckoutBasketResponse>();
+            //    var response = result.Adapt<CheckoutBasketResponse>();
 
-                return Results.Ok(response);
-            }).WithName("CheckoutBasket")
-            .Produces<GetBasketResponse>(StatusCodes.Status201Created)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithSummary("CheckoutBasket")
-            .WithDescription("CheckoutBasket");
+            //    return Results.Ok(response);
+            //}).WithName("CheckoutBasket")
+            //.Produces<GetBasketResponse>(StatusCodes.Status201Created)
+            //.ProducesProblem(StatusCodes.Status400BadRequest)
+            //.WithSummary("CheckoutBasket")
+            //.WithDescription("CheckoutBasket");
         }
     }
 }
