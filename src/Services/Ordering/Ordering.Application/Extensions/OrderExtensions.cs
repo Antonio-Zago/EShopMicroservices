@@ -13,10 +13,12 @@ namespace Ordering.Application.Extensions
     {
         public static IEnumerable<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
         {
-            List<OrderDto> result = new();
-            foreach (var order in orders)
-            {
-                var dto = new OrderDto(
+            return orders.Select(order => order.ToOrderDto()).ToList();
+        }
+
+        public static OrderDto ToOrderDto(this Order order)
+        {
+            return new OrderDto(
                 id: order.Id.Value,
                 CustomerId: order.CustomerId.Value,
                 OrderName: order.OrderName.Value,
@@ -48,11 +50,6 @@ namespace Ordering.Application.Extensions
                     oi.ProductId.Value,
                     oi.Quantity,
                     oi.Price)).ToList());
-
-                result.Add(dto);
-            }
-
-            return result;
         }
     }
 }
