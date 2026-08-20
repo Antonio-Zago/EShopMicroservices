@@ -54,7 +54,7 @@ namespace Ordering.Application.Orders.EventHandlers.Integration
             // representando o total do pedido. O ideal é evoluir o evento para carregar os itens.
             var orderItems = new List<OrderItemDto>
             {
-                new OrderItemDto(orderId, Guid.NewGuid(), 1, message.TotalPrice)
+                new OrderItemDto(orderId, new Guid("5334c996-8457-4cf0-815c-ed2b77c4ff61"), 1, message.TotalPrice)
             };
 
             var orderDto = new OrderDto(

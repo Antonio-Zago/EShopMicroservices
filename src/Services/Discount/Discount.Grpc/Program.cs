@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Só descomentar para rodar no docker
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(8080, listenOptions =>
