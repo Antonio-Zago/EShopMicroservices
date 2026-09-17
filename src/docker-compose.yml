@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
-  yarpapigateway:
+   yarpapigateway:
     image: ${DOCKER_REGISTRY-}yarpapigateway
     build:
       context: .
